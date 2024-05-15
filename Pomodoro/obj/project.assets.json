@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\lulub\\.nuget\\packages\\": {}
+    "C:\\Users\\mathl\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lulub\\RiderProjects\\Pomodoro\\Pomodoro\\Pomodoro.csproj",
+      "projectUniqueName": "D:\\DEV-Projects\\EPSI\\Pomodoro\\Pomodoro\\Pomodoro.csproj",
       "projectName": "Pomodoro",
-      "projectPath": "C:\\Users\\lulub\\RiderProjects\\Pomodoro\\Pomodoro\\Pomodoro.csproj",
-      "packagesPath": "C:\\Users\\lulub\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lulub\\RiderProjects\\Pomodoro\\Pomodoro\\obj\\",
+      "projectPath": "D:\\DEV-Projects\\EPSI\\Pomodoro\\Pomodoro\\Pomodoro.csproj",
+      "packagesPath": "C:\\Users\\mathl\\.nuget\\packages\\",
+      "outputPath": "D:\\DEV-Projects\\EPSI\\Pomodoro\\Pomodoro\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\lulub\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\mathl\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -62,7 +62,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\lulub\\.dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\mathl\\.dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

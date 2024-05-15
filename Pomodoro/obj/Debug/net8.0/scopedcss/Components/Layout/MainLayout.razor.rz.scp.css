@@ -1,15 +1,15 @@
-.page {
+.page[b-mdli2hokia] {
     position: relative;
     display: flex;
     flex-direction: column;
 }
 
-main {
+main[b-mdli2hokia] {
     flex: 1;
 }
 
 @media (min-width: 641px) {
-    .page {
+    .page[b-mdli2hokia] {
         flex-direction: row;
     }
 }

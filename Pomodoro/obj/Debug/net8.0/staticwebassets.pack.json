@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\DEV-Projects\\EPSI\\Pomodoro\\Pomodoro\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Pomodoro.bundle.scp.css",
+      "PackagePath": "staticwebassets\\Pomodoro.bundle.scp.css"
+    },
+    {
+      "Id": "D:\\DEV-Projects\\EPSI\\Pomodoro\\Pomodoro\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "D:\\DEV-Projects\\EPSI\\Pomodoro\\Pomodoro\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\DEV-Projects\\EPSI\\Pomodoro\\Pomodoro\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "D:\\DEV-Projects\\EPSI\\Pomodoro\\Pomodoro\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Pomodoro.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.Pomodoro.props",
+      "PackagePath": "build\\Pomodoro.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.Pomodoro.props",
+      "PackagePath": "buildMultiTargeting\\Pomodoro.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.Pomodoro.props",
+      "PackagePath": "buildTransitive\\Pomodoro.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
