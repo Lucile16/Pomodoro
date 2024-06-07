@@ -1,35 +1,42 @@
 ﻿@page "/"
-@using System.Text
 @using System.Text.Json
-@using System
+@using System.Timers
+@using Microsoft.AspNetCore.Components.Web
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
 @rendermode InteractiveServer
 
 <PageTitle>Pomodoro Timer</PageTitle>
 
-<h1>Pomodoro Timer</h1>
+<h1>
+    Pomodoro Timer
+    @if (SessionStarted)
+    {
+        <text>(@(IsWorking ? "Work Time" : "Break Time"))</text>
+    }
+</h1>
 
 <div>
     <label for="workTimeSelect">Work Time:</label>
-    <select id="workTimeSelect" @onchange="WorkTimeChanged">
+    <select id="workTimeSelect" @onchange="DefineWorkAndBreakPeriods">
         <option value="25">25 minutes</option>
         <option value="45">45 minutes</option>
     </select>
 </div>
 
 <div>
-    <p>Break Time: @breakTime minutes</p>
+    <p>Break Time: @BreakTime minutes</p>
     <p role="status">Time Remaining: @DisplayTime</p>
 </div>
 
-<button class="btn btn-primary" @onclick="StartTimer" disabled="@isRunning">Start</button>
-<button class="btn btn-primary" @onclick="PauseTimer" disabled="@(!isRunning)">Pause</button>
-<button class="btn btn-primary" @onclick="ResetTimer" disabled="@(!isRunning)">Reset</button>
+<button class="btn btn-primary" @onclick="StartTimer" disabled="@IsRunning">Start</button>
+<button class="btn btn-primary" @onclick="PauseTimer" disabled="@(!IsRunning)">Pause</button>
+<button class="btn btn-primary" @onclick="ResetTimer">Reset</button>
 <button class="btn btn-primary" @onclick="ExportSessions">Export Sessions</button>
 
-<div>
+<div class="pt-4">
     <h2>Sessions</h2>
     <ul>
-        @foreach (var session in sessions)
+        @foreach (var session in Sessions)
         {
             <li>@session</li>
         }
@@ -37,119 +44,141 @@
 </div>
 
 @code {
-    private int workTime = 25;
-    private int breakTime = 5;
-    private int minutes = 25;
-    private int seconds = 0;
-    private bool isRunning = false;
-    private System.Timers.Timer timer;
-    private List<string> sessions = new List<string>();
+    public int WorkTime { get; set; } = 25;
+    public int BreakTime { get; set; } = 5;
+    public int Minutes { get; set; } = 25;
+    public int Seconds { get; set; }
+    public bool IsRunning { get; set; }
+    public bool IsWorking { get; set; } = true;
+    public Timer? Timer { get; set; }
+    public List<string> Sessions { get; set; } = [];
+    public bool SessionStarted { get; set; }
 
-    private string DisplayTime => $"{minutes:00}:{seconds:00}";
+    public string DisplayTime => $"{Minutes:00}:{Seconds:00}";
 
     protected override async Task OnInitializedAsync()
     {
-        timer = new System.Timers.Timer(1000);
-        timer.Elapsed += TimerElapsed;
+        Timer = new Timer(1000);
+        Timer.Elapsed += TimerElapsed;
         await base.OnInitializedAsync();
     }
 
-    private void StartTimer()
+    public virtual void InvokeStateHasChanged()
     {
-        if (!isRunning)
+        StateHasChanged();
+    }
+
+    public virtual async void InvokeAsyncStateHasChanged()
+    {
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public void StartTimer()
+    {
+        IsRunning = true;
+        SessionStarted = true;
+        Timer?.Start();
+        InvokeStateHasChanged(); // Trigger UI update
+
+        // Add a new session to the list
+        Sessions.Add($"Session started at {DateTime.Now} with work time: {WorkTime} minutes and break time: {BreakTime} minutes");
+        SaveSessions();
+    }
+
+    public void PauseTimer()
+    {
+        Timer?.Stop();
+        IsRunning = false;
+        InvokeStateHasChanged(); // Trigger UI update
+
+        // Update the current session with the stop time
+        Sessions.Add($"Session stopped at {DateTime.Now} with {Minutes} minutes and {Seconds} seconds remaining.");
+        SaveSessions();
+    }
+
+    public void ResetTimer()
+    {
+        Timer?.Stop();
+        IsRunning = false;
+        Minutes = WorkTime;
+        Seconds = 0;
+        Sessions = [];
+        SessionStarted = false;
+        InvokeStateHasChanged(); // Trigger UI update
+
+        Sessions.Clear();
+        SaveSessions();
+    }
+
+    public void SaveSessions()
+    {
+        var json = JsonSerializer.Serialize(Sessions);
+        File.WriteAllText("sessions.json", json);
+    }
+
+    public void ExportSessions()
+    {
+        var json = JsonSerializer.Serialize(Sessions);
+        var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "sessions.json");
+        File.WriteAllText(path, json);
+    }
+
+    public void DefineWorkAndBreakPeriods(ChangeEventArgs e)
+    {
+        WorkTime = WorkTime = int.Parse(e.Value?.ToString() ?? "0");
+        Minutes = WorkTime; // Reset the timer
+        Seconds = 0;
+
+        BreakTime = WorkTime switch
         {
-            isRunning = true;
-            timer.Start();
-            StateHasChanged(); // Trigger UI update
-
-            // Add a new session to the list
-            sessions.Add($"Session started at {DateTime.Now} with work time: {workTime} minutes and break time: {breakTime} minutes");
-        }
+            // Set breakTime based on workTime
+            25 => 5,
+            45 => 15,
+            _ => BreakTime
+        };
     }
 
-    private void PauseTimer()
+    public void TimerElapsed(object? sender, ElapsedEventArgs e)
     {
-        if (isRunning)
+        if (Seconds == 0)
         {
-            timer.Stop();
-            isRunning = false;
-            StateHasChanged(); // Trigger UI update
-
-            // Update the current session with the stop time
-            sessions.Add($"Session stopped at {DateTime.Now} with {minutes} minutes and {seconds} seconds remaining.");
-        }
-    }
-
-    private void ResetTimer()
-    {
-        timer.Stop();
-        isRunning = false;
-        minutes = workTime;
-        seconds = 0;
-        StateHasChanged(); // Trigger UI update
-    }
-    
-    private async Task ExportSessions()
-    {
-        var json = JsonSerializer.Serialize(sessions);
-        System.IO.File.WriteAllText("sessions.json", json);
-    }
-    
-    private void WorkTimeChanged(ChangeEventArgs e)
-    {
-        workTime = int.Parse(e.Value.ToString());
-        minutes = workTime; // Reset the timer
-        seconds = 0;
-
-        // Set breakTime based on workTime
-        if (workTime == 25)
-        {
-            breakTime = 5;
-        }
-        else if (workTime == 45)
-        {
-            breakTime = 15;
-        }
-    }
-
-    private void BreakTimeChanged(ChangeEventArgs e)
-    {
-        breakTime = int.Parse(e.Value.ToString());
-    }
-
-    private async void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
-    {
-        if (seconds == 0)
-        {
-            if (minutes == 0)
+            if (Minutes == 0)
             {
-                timer.Stop();
-                isRunning = false;
-                if (workTime > 0)
+                Timer?.Stop();
+                IsRunning = false;
+                DefineWorkAndBreakPeriods(new ChangeEventArgs { Value = WorkTime });
+
+                if (IsWorking)
                 {
-                    minutes = breakTime;
+                    IsWorking = false;
+                    Minutes = BreakTime;
+                    Seconds = 0;
+                    Timer?.Start();
+                    InvokeAsyncStateHasChanged(); // Ensure UI update on UI thread
                 }
                 else
                 {
-                    minutes = workTime;
+                    IsWorking = true;
+                    Minutes = WorkTime;
+                    Seconds = 0;
+                    Timer?.Start();
+                    InvokeAsyncStateHasChanged(); // Ensure UI update on UI thread
                 }
-                seconds = 0;
-                await InvokeAsync(StateHasChanged); // Ensure UI update on UI thread
+
+                Seconds = 0;
+                InvokeAsyncStateHasChanged(); // Ensure UI update on UI thread
                 return;
             }
-            else
-            {
-                minutes--;
-                seconds = 59;
-            }
+
+            Minutes--;
+            Seconds = 59;
         }
         else
         {
-            seconds--;
+            Seconds--;
         }
 
-
-        await InvokeAsync(StateHasChanged); // Ensure UI update on UI thread
-
+        InvokeAsyncStateHasChanged(); // Ensure UI update on UI thread
     }
+
 }

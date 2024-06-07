@@ -1,0 +1,15 @@
+﻿D:\DEV-Projects\EPSI\Pomodoro\PomodoroTests\Components\Pages\HomeTest.cs
+C:\Users\mathl\.nuget\packages\microsoft.net.test.sdk\17.8.0\build\netcoreapp3.1\Microsoft.NET.Test.Sdk.Program.cs
+C:\Users\mathl\.nuget\packages\microsoft.testplatform.testhost\17.8.0\build\netcoreapp3.1\x64\testhost.exe
+C:\Users\mathl\.nuget\packages\microsoft.testplatform.testhost\17.8.0\build\netcoreapp3.1\x64\testhost.dll
+C:\Users\mathl\.nuget\packages\nunit3testadapter\4.5.0\build\netcoreapp3.1\NUnit3.TestAdapter.dll
+C:\Users\mathl\.nuget\packages\nunit3testadapter\4.5.0\build\netcoreapp3.1\NUnit3.TestAdapter.pdb
+C:\Users\mathl\.nuget\packages\nunit3testadapter\4.5.0\build\netcoreapp3.1\nunit.engine.dll
+C:\Users\mathl\.nuget\packages\nunit3testadapter\4.5.0\build\netcoreapp3.1\nunit.engine.api.dll
+C:\Users\mathl\.nuget\packages\nunit3testadapter\4.5.0\build\netcoreapp3.1\nunit.engine.core.dll
+C:\Users\mathl\.nuget\packages\nunit3testadapter\4.5.0\build\netcoreapp3.1\testcentric.engine.metadata.dll
+D:\DEV-Projects\EPSI\Pomodoro\PomodoroTests\TestResults\06bd2818-d9e9-4028-8811-dc53d9d6770e\coverage.cobertura.xml
+D:\DEV-Projects\EPSI\Pomodoro\PomodoroTests\TestResults\7d520e71-d0d8-4daa-a007-1ebf0f464337\coverage.cobertura.xml
+D:\DEV-Projects\EPSI\Pomodoro\PomodoroTests\TestResults\9b45e416-9087-4feb-b175-6371cb094503\coverage.cobertura.xml
+D:\DEV-Projects\EPSI\Pomodoro\PomodoroTests\TestResults\a3b6eac8-e1aa-4e03-8eb0-0895e3f3cf51\coverage.cobertura.xml
+D:\DEV-Projects\EPSI\Pomodoro\PomodoroTests\TestResults\ce6f2f22-b2a5-442f-a497-493f778f50d7\coverage.cobertura.xml
